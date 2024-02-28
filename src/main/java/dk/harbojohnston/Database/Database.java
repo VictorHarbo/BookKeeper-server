@@ -73,7 +73,7 @@ public class Database implements AutoCloseable{
             statement.setString(1, "%"+author+"%");
 
             ResultSet resultSet = statement.executeQuery();
-            Book returnedBook = new Book();
+            Book book = new Book();
 
             while (resultSet.next()) {
                 int bookId = resultSet.getInt(ID_COLUMN);
@@ -87,12 +87,43 @@ public class Database implements AutoCloseable{
                 long bookISBN = resultSet.getLong(ISBN_COLUMN);
                 // You can retrieve other attributes of the book here if needed
 
-                returnedBook.setAllValues(bookId, bookTitle, bookAuthor,bookPages, bookStatus, bookDescription,
+                book.setAllValues(bookId, bookTitle, bookAuthor,bookPages, bookStatus, bookDescription,
                         bookShortDescription, bookRating, bookISBN);
                 //System.out.println("Title: " + title + ", Author: " + bookAuthor);
             }
 
-            return returnedBook;
+            return book;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Book getBookByTitle(String title){
+        try (PreparedStatement statement = connection.prepareStatement(getBookByTitle)){
+            statement.setString(1, "%"+title+"%");
+
+            ResultSet resultSet = statement.executeQuery();
+            Book book = new Book();
+
+            while (resultSet.next()) {
+                int bookId = resultSet.getInt(ID_COLUMN);
+                String bookTitle = resultSet.getString(TITLE_COLUMN);
+                String bookAuthor = resultSet.getString(AUTHOR_COLUMN);
+                int bookPages = resultSet.getInt(PAGES_COLUMN);
+                Book.Status bookStatus = Book.Status.valueOf(resultSet.getString(STATUS_COLUMN));
+                String bookDescription = resultSet.getString(DESCRIPTION_COLUMN);
+                String bookShortDescription = resultSet.getString(SHORT_DESCRIPTION_COLUMN);
+                float bookRating = resultSet.getFloat(RATING_COLUMN);
+                long bookISBN = resultSet.getLong(ISBN_COLUMN);
+                // You can retrieve other attributes of the book here if needed
+
+                book.setAllValues(bookId, bookTitle, bookAuthor,bookPages, bookStatus, bookDescription,
+                        bookShortDescription, bookRating, bookISBN);
+                //System.out.println("Title: " + title + ", Author: " + bookAuthor);
+            }
+
+            return book;
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

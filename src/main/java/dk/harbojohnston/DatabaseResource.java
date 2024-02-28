@@ -19,4 +19,5 @@ public class DatabaseResource {
     // TODO: Get all of a users books
     // TODO: Update status of users book
     // TODO: Add a book
+    // TODO: Query for a book
 }

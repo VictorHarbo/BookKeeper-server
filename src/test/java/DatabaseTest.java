@@ -14,9 +14,18 @@ public class DatabaseTest {
     }
 
     @Test
-    public void testGetBook() throws Exception {
+    public void testGetBookByAuthor() throws Exception {
         try (Database db = new Database()) {
             Book result = db.getBookByAuthor("Doe");
+
+            System.out.println(result.toString());
+        }
+
+    }
+    @Test
+    public void testGetBookByTitle() throws Exception {
+        try (Database db = new Database()) {
+            Book result = db.getBookByTitle("Book");
 
             System.out.println(result.toString());
         }
