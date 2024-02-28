@@ -4,12 +4,20 @@ public class Book {
     private int id;
     private String title;
     private String author;
+    private int pages;
     private Status status;
     private String description;
     private String shortDescription;
     private float rating;
     private long isbn;
 
+    public int getPages() {
+        return pages;
+    }
+
+    public void setPages(int pages) {
+        this.pages = pages;
+    }
 
     private enum Status {
         TOREAD,

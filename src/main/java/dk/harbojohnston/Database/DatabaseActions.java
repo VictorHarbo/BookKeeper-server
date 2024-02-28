@@ -1,5 +1,7 @@
 package dk.harbojohnston.Database;
 
+import dk.harbojohnston.DatabaseResource;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -26,8 +28,12 @@ public class DatabaseActions {
 
             // Perform database operations here...
 
+            try (Database books = new Database()) {
+                books.getBookByAuthor("Doe");
+            }
 
-        } catch (SQLException e) {
+
+        } catch (Exception e) {
             System.out.println("Connection failure.");
             e.printStackTrace();
         }
