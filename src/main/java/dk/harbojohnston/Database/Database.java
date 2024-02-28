@@ -68,18 +68,31 @@ public class Database implements AutoCloseable{
 
     }
 
-    public void getBookByAuthor(String author){
+    public Book getBookByAuthor(String author){
         try (PreparedStatement statement = connection.prepareStatement(getBookByAuthor)){
             statement.setString(1, "%"+author+"%");
 
             ResultSet resultSet = statement.executeQuery();
+            Book returnedBook = new Book();
 
             while (resultSet.next()) {
-                String title = resultSet.getString(TITLE_COLUMN);
+                int bookId = resultSet.getInt(ID_COLUMN);
+                String bookTitle = resultSet.getString(TITLE_COLUMN);
                 String bookAuthor = resultSet.getString(AUTHOR_COLUMN);
+                int bookPages = resultSet.getInt(PAGES_COLUMN);
+                Book.Status bookStatus = Book.Status.valueOf(resultSet.getString(STATUS_COLUMN));
+                String bookDescription = resultSet.getString(DESCRIPTION_COLUMN);
+                String bookShortDescription = resultSet.getString(SHORT_DESCRIPTION_COLUMN);
+                float bookRating = resultSet.getFloat(RATING_COLUMN);
+                long bookISBN = resultSet.getLong(ISBN_COLUMN);
                 // You can retrieve other attributes of the book here if needed
-                System.out.println("Title: " + title + ", Author: " + bookAuthor);
+
+                returnedBook.setAllValues(bookId, bookTitle, bookAuthor,bookPages, bookStatus, bookDescription,
+                        bookShortDescription, bookRating, bookISBN);
+                //System.out.println("Title: " + title + ", Author: " + bookAuthor);
             }
+
+            return returnedBook;
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

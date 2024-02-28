@@ -19,12 +19,25 @@ public class Book {
         this.pages = pages;
     }
 
-    private enum Status {
+    public enum Status {
         TOREAD,
         READING,
         READ,
         DNF
 
+    }
+
+    public void setAllValues(int id, String title, String author, int pages, Status status,
+                             String description, String shortDescription, float rating, long isbn){
+        this.id = id;
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.status = status;
+        this.description = description;
+        this.shortDescription = shortDescription;
+        this.rating = rating;
+        this.isbn = isbn;
     }
 
     public int getId() {
@@ -89,5 +102,20 @@ public class Book {
 
     public void setIsbn(long isbn) {
         this.isbn = isbn;
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", author='" + author + '\'' +
+                ", pages=" + pages +
+                ", status=" + status +
+                ", description='" + description + '\'' +
+                ", shortDescription='" + shortDescription + '\'' +
+                ", rating=" + rating +
+                ", isbn=" + isbn +
+                '}';
     }
 }
